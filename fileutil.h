@@ -17,7 +17,8 @@ char * substringSearchAA(char *target, char ** arr, int size);
 char * substringSearch2D(char *target, char (*arr)[COLS], int size);
 
 //returns the first string of arr if that matches target
-char * stringMatchAA(char *target, char **arr, int size);
+char * stringSearchAA(char *target, char **arr, int size);
+char ** stringBSearchAA(char *target, char **arr, int size, int sizeOfElem); //using binary search
 
 
 // Free the memory used by the array

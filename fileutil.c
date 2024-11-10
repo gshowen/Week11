@@ -3,14 +3,7 @@
 #include <string.h>
 
 #include "fileutil.h"
-
-// DIRECTIONS
-// Choose whether you are doing the 2D array or
-// the array of arrays.
-// For the 2D array,
-//    implement loadFile2D, substringSearch2D, and free2D.
-// For the array of arrays, 
-//    implement loadFileAA, substringSearchAA, and freeAA.
+int compare(const void *key, const void *data);
 
 
 // Load the text file from the given filename.
@@ -63,33 +56,10 @@ char ** loadFileAA(char *filename, int *size)
 	return arr;
 }
 
-// char (*loadFile2D(char *filename, int *size))[COLS]
-// {
-// 	FILE *in = fopen(filename, "r");
-// 	if (!in)
-// 	{
-// 	    perror("Can't open file");
-// 	    exit(1);
-// 	}
-	
-// 	// TODO
-// 	// Allocate memory for an 2D array, using COLS as the width.
-// 	// Read the file line by line into a buffer.
-//     //   Trim newline.
-// 	//   Expand array if necessary (realloc).
-// 	//   Copy each line from the buffer into the array (use strcpy).
-//     // Close the file.
-	
-// 	// The size should be the number of entries in the array.
-// 	*size = 0;
-	
-// 	// Return pointer to the array.
-// 	return NULL;
-// }
 
 // Search the array for the target string.
 // Return the found string or NULL if not found.
-char * stringMatchAA(char *target, char **arr, int size)
+char * stringSearchAA(char *target, char **arr, int size)
 {
 	for(int i=0; i<size; i++){
 		if(strcmp(arr[i], target) == 0){
@@ -98,6 +68,15 @@ char * stringMatchAA(char *target, char **arr, int size)
 	}
 
 	return NULL;
+}
+
+char ** stringBSearchAA(char *target, char **arr, int size, int sizeOfElem)
+{
+	char **result = bsearch(&target, arr, size, sizeOfElem, compare);
+	// printf("%s (in fileUtil)\n", *result);
+
+
+	return result;
 }
 
 char * substringSearchAA(char *target, char **arr, int size)
@@ -111,12 +90,6 @@ char * substringSearchAA(char *target, char **arr, int size)
 	return NULL;
 }
 
-// char * substringSearch2D(char *target, char (*lines)[COLS], int size)
-// {
-    
-//     return NULL;
-// }
-
 // Free the memory used by the array
 void freeAA(char ** arr, int size)
 {
@@ -126,7 +99,10 @@ void freeAA(char ** arr, int size)
 	free(arr);
 }
 
-// void free2D(char (*arr)[COLS])
-// {
 
-// }
+//comparison method for quicksort and binary search
+int compare(const void *key, const void *data){
+    //cast to a pointer of a pointer
+
+    return strcmp(*(char **)key, *(char **)data);
+}
